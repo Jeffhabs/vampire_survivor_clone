@@ -21,24 +21,6 @@ func _physics_process(_delta: float) -> void:
 
 func get_input() -> void:
   var input_direction = Input.get_vector("left", "right", "up", "down")
-
-  if Input.is_action_pressed("down") and Input.is_action_pressed("left"):
-    direction = Vector2(-1, 1)
-  elif Input.is_action_pressed("down") and Input.is_action_pressed("right"):
-    direction = Vector2(1, 1)
-  elif Input.is_action_pressed("up") and Input.is_action_pressed("left"):
-    direction = Vector2(-1, -1)
-  elif Input.is_action_pressed("up") and Input.is_action_pressed("right"):
-    direction = Vector2(1, -1)
-  elif Input.is_action_pressed("right"):
-    direction = Vector2.RIGHT
-  elif Input.is_action_pressed("left"):
-    direction = Vector2.LEFT
-  elif Input.is_action_pressed("up"):
-    direction = Vector2.UP
-  elif Input.is_action_pressed("down"):
-    direction = Vector2.DOWN
-
   velocity = input_direction * speed
 
 func handle_animation() -> void:
@@ -51,7 +33,6 @@ func handle_animation() -> void:
 func _on_hurt_box_hurt(damage: int) -> void:
   health_points -= damage
   print("Player health: %d" % health_points)
-
 
 func _on_enemy_detection_area_body_entered(body: Node2D) -> void:
   if not nearest_enemies.has(body):

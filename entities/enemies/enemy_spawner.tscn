@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://clorotvs4bb1l"]
 
-[ext_resource type="Script" path="res://entities/enemies/EnemySpawner.gd" id="1_u41qy"]
+[ext_resource type="Script" path="res://entities/enemies/enemy_spawner.gd" id="1_u41qy"]
 [ext_resource type="PackedScene" uid="uid://c38hyx2gehnre" path="res://entities/enemies/slime/enemy_slime.tscn" id="2_l4yya"]
 [ext_resource type="Script" path="res://resources/spawn_info.gd" id="3_jxam4"]
 

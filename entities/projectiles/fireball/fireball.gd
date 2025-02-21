@@ -1,10 +1,10 @@
 class_name Fireball
 extends Area2D
-
-var speed: float = 110.0  # Add this line to store the speed of the fireball
+var speed: float = 110.0 # Add this line to store the speed of the fireball
 var target := Vector2.ZERO
 var damage := 1
 var angle := Vector2.ZERO
+
 @onready var _animated_sprite = $AnimatedSprite2D
 @onready var _hit_box = $HitBox
 @onready var _base_collision = $CollisionShape2D
@@ -18,7 +18,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
   position += angle * speed * delta
 
-func _on_hit_box_area_entered(area:Area2D) -> void:
+func _on_hit_box_area_entered(area: Area2D) -> void:
   if area.is_in_group("enemy"):
     _hit_box.get_node("CollisionShape2D").call_deferred("set", "disabled", true)
     _base_collision.call_deferred("set", "disabled", true)

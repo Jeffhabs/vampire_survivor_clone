@@ -1737,8 +1737,8 @@ y_sort_enabled = true
 [node name="Player" parent="World/YSort" instance=ExtResource("10_0fxmp")]
 position = Vector2(2000, 2000)
 
-[node name="EnemyDetectionArea" parent="World/YSort/Player" index="5"]
-visible = true
+[node name="HurtBox" parent="World/YSort/Player" index="4"]
+HurtBoxType = 0
 
 [node name="Obstacles" type="TileMap" parent="World/YSort"]
 y_sort_enabled = true

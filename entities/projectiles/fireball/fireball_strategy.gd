@@ -19,12 +19,14 @@ func _ready() -> void:
   player.nearest_enemies_detected.connect(update_nearest_enemies)
 
   reload_timer = Timer.new()
-  reload_timer.wait_time = 1.5
+  # reload_timer.wait_time = 1.5
+  reload_timer.wait_time = 2.5
   reload_timer.timeout.connect(_timer_timeout)
   add_child(reload_timer)
 
   attack_timer = Timer.new()
-  attack_timer.wait_time = 0.075
+  # attack_timer.wait_time = 0.075
+  attack_timer.wait_time = .5
   attack_timer.timeout.connect(_on_attack_timer_timeout)
   add_child(attack_timer)
 
@@ -40,8 +42,8 @@ func update_nearest_enemies(enemies: Array) -> void:
 func _initialize() -> void:
   speed = 100
   lifetime = 15.0
-  damage = 4
-  interval = .5
+  damage = 2
+  interval = 1.5
   base_ammo = 1
 
 func _process(delta: float) -> void:
@@ -78,7 +80,7 @@ func _timer_timeout():
 
 func _on_attack_timer_timeout():
   if ammo > 0:
-    player._character_sprite.play("fire_attack")
+    player._character_sprite.play("attack")
     _fire_projectile()
     ammo -= 1
     attack_timer.start()
@@ -91,7 +93,7 @@ func get_closest_target() -> Vector2:
     var closest_distance = player.position.distance_to(closest_enemy.global_position)
     for enemy in nearest_enemies:
       var distance = player.position.distance_to(enemy.global_position)
-      if  distance < closest_distance:
+      if distance < closest_distance:
         closest_enemy = enemy
         closest_distance = distance
     return closest_enemy.global_position
