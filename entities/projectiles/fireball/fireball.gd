@@ -1,6 +1,7 @@
 class_name Fireball
 extends Area2D
-var speed: float = 110.0 # Add this line to store the speed of the fireball
+
+var speed: float = 110.0
 var target := Vector2.ZERO
 var damage := 1
 var angle := Vector2.ZERO
