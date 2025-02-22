@@ -2,14 +2,16 @@ class_name EnemyChase
 extends State
 
 @export var enemy: CharacterBody2D
-@export var attack_range := 50.0
+@export var attack_range := 58.0
 
 @onready var sprite := enemy.get_node("AnimatedSprite2D") as AnimatedSprite2D
+@onready var hitbox_collision := enemy.get_node("HitBox/CollisionShape2D") as CollisionShape2D
 
 var player: CharacterBody2D
 
 func _enter() -> void:
-  sprite.play("walk")
+  hitbox_collision.disabled = true
+  sprite.play("chase")
   player = get_tree().get_first_node_in_group("player") as CharacterBody2D
 
 func _physics_update(_delta: float) -> void:
@@ -30,3 +32,10 @@ func update_sprite_orientation(to_player: Vector2) -> void:
     sprite.flip_h = true
   else:
     sprite.flip_h = false
+
+func _on_hurt_box_hurt(damage: int) -> void:
+  enemy.health_points -= damage
+  if enemy.health_points <= 0:
+    transition_to.emit(self, "death")
+  else:
+    transition_to.emit(self, "hurt")

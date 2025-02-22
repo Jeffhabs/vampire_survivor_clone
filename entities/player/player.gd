@@ -12,6 +12,7 @@ var nearest_enemies: Array = []
 signal nearest_enemies_detected(enemies: Array)
 
 func _ready() -> void:
+  pass
   projectile_manager.add_projectile("fireball")
 
 func _physics_process(_delta: float) -> void:
@@ -32,7 +33,6 @@ func handle_animation() -> void:
 
 func _on_hurt_box_hurt(damage: int) -> void:
   health_points -= damage
-  print("Player health: %d" % health_points)
 
 func _on_enemy_detection_area_body_entered(body: Node2D) -> void:
   if not nearest_enemies.has(body):

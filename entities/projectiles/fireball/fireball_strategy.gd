@@ -80,7 +80,6 @@ func _timer_timeout():
 
 func _on_attack_timer_timeout():
   if ammo > 0:
-    player._character_sprite.play("attack")
     _fire_projectile()
     ammo -= 1
     attack_timer.start()
