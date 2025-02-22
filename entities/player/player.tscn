@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://oqsl5aw5bwoa"]
+[gd_scene load_steps=47 format=3 uid="uid://oqsl5aw5bwoa"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_huyux"]
 [ext_resource type="Texture2D" uid="uid://1qxps4ncj8fx" path="res://Texture/characters/Wizard/Wizard/Wizard-Attack02.png" id="2_bcnpl"]
@@ -6,7 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://3gxm6kocjc0g" path="res://Texture/characters/Wizard/Wizard/Wizard-Attack01.png" id="2_ltnhe"]
 [ext_resource type="Script" path="res://entities/projectiles/pojectile_manager.gd" id="3_4kw52"]
 [ext_resource type="Texture2D" uid="uid://bdv2ybxd6et6i" path="res://Texture/characters/Wizard/Wizard/Wizard-Walk.png" id="3_gi5ne"]
+[ext_resource type="Texture2D" uid="uid://irbwqgbrhpot" path="res://Texture/characters/Wizard/Wizard/Wizard-Hurt.png" id="4_0m6c0"]
 [ext_resource type="PackedScene" uid="uid://d3dtnbvlkqxoi" path="res://utility/hurt_box/hurt_box.tscn" id="5_ynji2"]
+[ext_resource type="Script" path="res://scripts/states/state_machine.gd" id="8_vr5e7"]
+[ext_resource type="Script" path="res://scripts/states/player/walk.gd" id="9_t3aqt"]
+[ext_resource type="Script" path="res://scripts/states/player/idle.gd" id="10_7oada"]
+[ext_resource type="Script" path="res://scripts/states/player/hurt.gd" id="12_us466"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sb6hi"]
 size = Vector2(4, 21)
@@ -58,6 +63,22 @@ region = Rect2(400, 0, 100, 100)
 [sub_resource type="AtlasTexture" id="AtlasTexture_1pj3e"]
 atlas = ExtResource("2_ltnhe")
 region = Rect2(500, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v3v85"]
+atlas = ExtResource("4_0m6c0")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_32c8i"]
+atlas = ExtResource("4_0m6c0")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7th11"]
+atlas = ExtResource("4_0m6c0")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pbp48"]
+atlas = ExtResource("4_0m6c0")
+region = Rect2(300, 0, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rml18"]
 atlas = ExtResource("2_dtn5q")
@@ -165,6 +186,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_v3v85")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_32c8i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7th11")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pbp48")
+}],
+"loop": true,
+"name": &"hurt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_rml18")
 }, {
 "duration": 1.0,
@@ -236,7 +274,9 @@ shape = SubResource("RectangleShape2D_sb6hi")
 texture_filter = 1
 scale = Vector2(1.8, 1.8)
 sprite_frames = SubResource("SpriteFrames_a4mht")
-animation = &"attack"
+animation = &"hurt"
+frame = 2
+frame_progress = 0.207601
 centered = false
 offset = Vector2(-50, -57)
 
@@ -267,9 +307,25 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetectionArea"]
 shape = SubResource("CircleShape2D_nr5wd")
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("8_vr5e7")
+initial_state = NodePath("Idle")
 
-[connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
+[node name="Walk" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]
+script = ExtResource("9_t3aqt")
+player = NodePath("../..")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]
+script = ExtResource("10_7oada")
+player = NodePath("../..")
+
+[node name="Hurt" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]
+script = ExtResource("12_us466")
+player = NodePath("../..")
+
+[connection signal="frame_changed" from="AnimatedSprite2D" to="StateMachine/Hurt" method="_on_animated_sprite_2d_frame_changed"]
+[connection signal="hurt" from="HurtBox" to="StateMachine/Walk" method="_on_hurt_box_hurt"]
+[connection signal="hurt" from="HurtBox" to="StateMachine/Idle" method="_on_hurt_box_hurt"]
 [connection signal="body_entered" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_entered"]
 [connection signal="body_exited" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_exited"]
 

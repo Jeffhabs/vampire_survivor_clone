@@ -14,4 +14,7 @@ func _physics_update(_delta: float) -> void:
 
 func _on_animated_sprite_2d_frame_changed() -> void:
   if sprite.animation == "death" and sprite.frame == sprite.sprite_frames.get_frame_count("death") - 1:
-    enemy.call_deferred("queue_free")
+    get_tree().create_timer(1).timeout.connect(defer_queue_free)
+
+func defer_queue_free() -> void:
+  enemy.call_deferred("queue_free")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://c38hyx2gehnre"]
+[gd_scene load_steps=54 format=3 uid="uid://c38hyx2gehnre"]
 
 [ext_resource type="Texture2D" uid="uid://c3yh3bllj3faf" path="res://Texture/Slime/Slime/Slime-Idle.png" id="1_r6jwh"]
 [ext_resource type="Script" path="res://entities/enemies/slime/enemy_slime.gd" id="1_y7buf"]
@@ -86,19 +86,35 @@ region = Rect2(400, 0, 100, 100)
 atlas = ExtResource("2_xmpyp")
 region = Rect2(500, 0, 100, 100)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3sbu0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_odl6h"]
+atlas = ExtResource("2_rwlkb")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cydqu"]
+atlas = ExtResource("2_rwlkb")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rmfki"]
+atlas = ExtResource("2_rwlkb")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m0sv0"]
+atlas = ExtResource("2_rwlkb")
+region = Rect2(300, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mh338"]
 atlas = ExtResource("2_4sdm3")
 region = Rect2(0, 0, 100, 100)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_p7x0k"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_dwf5x"]
 atlas = ExtResource("2_4sdm3")
 region = Rect2(100, 0, 100, 100)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r0eq7"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_rthgv"]
 atlas = ExtResource("2_4sdm3")
 region = Rect2(200, 0, 100, 100)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vfjw1"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_rps2f"]
 atlas = ExtResource("2_4sdm3")
 region = Rect2(300, 0, 100, 100)
 
@@ -210,20 +226,32 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_3sbu0")
+"texture": SubResource("AtlasTexture_odl6h")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_p7x0k")
+"texture": SubResource("AtlasTexture_cydqu")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_r0eq7")
+"texture": SubResource("AtlasTexture_rmfki")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vfjw1")
+"texture": SubResource("AtlasTexture_m0sv0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mh338")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dwf5x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rthgv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rps2f")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -288,7 +316,7 @@ script = ExtResource("1_y7buf")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_s2qik")
-animation = &"chase"
+animation = &"death"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 2)
@@ -327,8 +355,8 @@ enemy = NodePath("../..")
 
 [node name="Hurt" type="Node" parent="StateMachine" node_paths=PackedStringArray("enemy")]
 script = ExtResource("12_jolp6")
-attack_range = null
 enemy = NodePath("../..")
+attack_range = null
 
 [node name="Death" type="Node" parent="StateMachine" node_paths=PackedStringArray("enemy")]
 script = ExtResource("13_22iu3")
