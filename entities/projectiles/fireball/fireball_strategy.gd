@@ -10,6 +10,9 @@ var attack_timer: Timer
 var nearest_enemies: Array = []
 
 @onready var player = get_tree().get_first_node_in_group("player") as Player
+@onready var player_sprite := player.get_node("AnimatedSprite2D") as AnimatedSprite2D
+
+signal attack_started()
 
 func _init(new_level: int) -> void:
   level = new_level
@@ -21,7 +24,7 @@ func _ready() -> void:
   reload_timer = Timer.new()
   # reload_timer.wait_time = 1.5
   reload_timer.wait_time = 2.5
-  reload_timer.timeout.connect(_timer_timeout)
+  reload_timer.timeout.connect(_on_reload_timer_timeout)
   add_child(reload_timer)
 
   attack_timer = Timer.new()
@@ -51,7 +54,7 @@ func _process(delta: float) -> void:
 
 func _fire_projectile() -> void:
   var fireball: Fireball = fireball_scene.instantiate()
-  fireball.position = player.position
+  fireball.position = Vector2(player.position.x, player.position.y - 10)
   fireball.speed = speed
   fireball.damage = damage
   fireball.target = get_closest_target()
@@ -74,8 +77,9 @@ func on_fireball_timeout(fireball) -> void:
     fireball.get_parent().remove_child(fireball)
     fireball.queue_free()
 
-func _timer_timeout():
+func _on_reload_timer_timeout():
   ammo += base_ammo
+  attack_started.emit()
   attack_timer.start()
 
 func _on_attack_timer_timeout():

@@ -14,7 +14,11 @@ func _ready() -> void:
   _hit_box.damage = damage
   angle = global_position.direction_to(target)
   rotation = angle.angle()
+  scale = Vector2(0.5, 0.5)
   _animated_sprite.play("travel")
+
+  var tween := get_tree().create_tween()
+  tween.tween_property(self, "scale", Vector2(1, 1), 1)
 
 func _physics_process(delta: float) -> void:
   position += angle * speed * delta

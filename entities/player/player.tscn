@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://oqsl5aw5bwoa"]
+[gd_scene load_steps=48 format=3 uid="uid://oqsl5aw5bwoa"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_huyux"]
 [ext_resource type="Texture2D" uid="uid://1qxps4ncj8fx" path="res://Texture/characters/Wizard/Wizard/Wizard-Attack02.png" id="2_bcnpl"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://scripts/states/player/walk.gd" id="9_t3aqt"]
 [ext_resource type="Script" path="res://scripts/states/player/idle.gd" id="10_7oada"]
 [ext_resource type="Script" path="res://scripts/states/player/hurt.gd" id="12_us466"]
+[ext_resource type="Script" path="res://scripts/states/player/attack.gd" id="13_v2tuj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sb6hi"]
 size = Vector2(4, 21)
@@ -157,9 +158,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ctqak")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -274,9 +275,9 @@ shape = SubResource("RectangleShape2D_sb6hi")
 texture_filter = 1
 scale = Vector2(1.8, 1.8)
 sprite_frames = SubResource("SpriteFrames_a4mht")
-animation = &"hurt"
-frame = 2
-frame_progress = 0.207601
+animation = &"attack"
+frame = 5
+frame_progress = 1.0
 centered = false
 offset = Vector2(-50, -57)
 
@@ -323,6 +324,12 @@ player = NodePath("../..")
 script = ExtResource("12_us466")
 player = NodePath("../..")
 
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]
+script = ExtResource("13_v2tuj")
+player = NodePath("../..")
+
+[connection signal="attack_started" from="." to="StateMachine/Idle" method="_on_player_attack_started"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/Attack" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="frame_changed" from="AnimatedSprite2D" to="StateMachine/Hurt" method="_on_animated_sprite_2d_frame_changed"]
 [connection signal="hurt" from="HurtBox" to="StateMachine/Walk" method="_on_hurt_box_hurt"]
 [connection signal="hurt" from="HurtBox" to="StateMachine/Idle" method="_on_hurt_box_hurt"]

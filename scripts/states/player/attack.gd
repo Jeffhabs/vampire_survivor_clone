@@ -1,18 +1,22 @@
-class_name PlayerWalk
+class_name PlayerAttack
 extends State
 
 @export var player: Player
 @export var speed := 65.0
 @onready var sprite := player.get_node("AnimatedSprite2D") as AnimatedSprite2D
 
-func _enter() -> void:
-  sprite.play("walk")
+func _enter():
+  sprite.flip_h = player.last_facing_left
+  sprite.play("attack")
 
-func _physics_update(_delta: float) -> void:
+func _exit():
+  pass
+
+func _update(_delta: float):
+  pass
+
+func _physics_update(_delta: float):
   move_player()
-
-  if player.velocity == Vector2.ZERO:
-    transition_to.emit(self, "idle")
 
 func move_player() -> void:
   var input_direction = Input.get_vector("left", "right", "up", "down")
@@ -22,10 +26,6 @@ func move_player() -> void:
   sprite.flip_h = player.last_facing_left
   player.move_and_slide()
 
-func _on_hurt_box_hurt(damage: int) -> void:
-  player.health_points -= damage
-  if player.health_points <= 0:
-    # transition_to.emit(self, "death")
-    print('player died')
-  else:
-    transition_to.emit(self, "hurt")
+func _on_animated_sprite_2d_animation_finished() -> void:
+  if sprite.animation == "attack":
+    transition_to.emit(self, "idle")
