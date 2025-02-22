@@ -8,7 +8,7 @@ var spawn_delay := 0
 func _on_timer_timeout() -> void:
   for spawn in spawns:
     if spawn_delay < spawn.spawn_interval:
-      spawn_delay += 1
+      spawn_delay += 1 # this matches to one second becuase the timer is set to 1 second
     else:
       spawn.spawn_delay_counter = 0
       var new_enemy = load(str(spawn.enemey.resource_path))
@@ -21,11 +21,11 @@ func _on_timer_timeout() -> void:
         counter += 1
 
 func get_random_position() -> Vector2:
-  var view_port = get_viewport_rect().size * randf_range(1.1,1.4)
-  var top_left := Vector2(player.global_position.x - view_port.x/2, player.global_position.y - view_port.y/2)
-  var top_right := Vector2(player.global_position.x + view_port.x/2, player.global_position.y - view_port.y/2)
-  var bottom_left := Vector2(player.global_position.x - view_port.x/2, player.global_position.y + view_port.y/2)
-  var bottom_right := Vector2(player.global_position.x + view_port.x/2, player.global_position.y + view_port.y/2)
+  var view_port = get_viewport_rect().size * randf_range(1.1, 1.4)
+  var top_left := Vector2(player.global_position.x - view_port.x / 2, player.global_position.y - view_port.y / 2)
+  var top_right := Vector2(player.global_position.x + view_port.x / 2, player.global_position.y - view_port.y / 2)
+  var bottom_left := Vector2(player.global_position.x - view_port.x / 2, player.global_position.y + view_port.y / 2)
+  var bottom_right := Vector2(player.global_position.x + view_port.x / 2, player.global_position.y + view_port.y / 2)
 
   var pos_side = ["up", "down", "right", "left"].pick_random()
   var spawn_pos1 := Vector2.ZERO

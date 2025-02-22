@@ -16,11 +16,10 @@ func _on_area_entered(area: Area2D) -> void:
           disableTimer.start()
         1: # HitOnce
           pass
-        2: #DisableHitBox
-          if area.has_method("tempdisable"):
-            area.tempdisable()
+        2: # DisableHitBox
+          if area.has_method("temp_disable"):
+            area.temp_disable()
       hurt.emit(area.damage)
 
 func _on_disable_timer_timeout() -> void:
   collision.call_deferred("set", "disabled", false)
-

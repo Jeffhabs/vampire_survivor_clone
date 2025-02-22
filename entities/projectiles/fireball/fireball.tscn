@@ -80,9 +80,7 @@ script = ExtResource("1_pjskb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0yf1u")
-animation = &"impact"
-frame = 1
-frame_progress = 0.573194
+animation = &"travel"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(4, 1)

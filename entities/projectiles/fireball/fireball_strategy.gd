@@ -10,6 +10,9 @@ var attack_timer: Timer
 var nearest_enemies: Array = []
 
 @onready var player = get_tree().get_first_node_in_group("player") as Player
+@onready var player_sprite := player.get_node("AnimatedSprite2D") as AnimatedSprite2D
+
+signal attack_started()
 
 func _init(new_level: int) -> void:
   level = new_level
@@ -19,12 +22,14 @@ func _ready() -> void:
   player.nearest_enemies_detected.connect(update_nearest_enemies)
 
   reload_timer = Timer.new()
-  reload_timer.wait_time = 1.5
-  reload_timer.timeout.connect(_timer_timeout)
+  # reload_timer.wait_time = 1.5
+  reload_timer.wait_time = 2.5
+  reload_timer.timeout.connect(_on_reload_timer_timeout)
   add_child(reload_timer)
 
   attack_timer = Timer.new()
-  attack_timer.wait_time = 0.075
+  # attack_timer.wait_time = 0.075
+  attack_timer.wait_time = .5
   attack_timer.timeout.connect(_on_attack_timer_timeout)
   add_child(attack_timer)
 
@@ -40,8 +45,8 @@ func update_nearest_enemies(enemies: Array) -> void:
 func _initialize() -> void:
   speed = 100
   lifetime = 15.0
-  damage = 4
-  interval = .5
+  damage = 2
+  interval = 1.5
   base_ammo = 1
 
 func _process(delta: float) -> void:
@@ -49,7 +54,7 @@ func _process(delta: float) -> void:
 
 func _fire_projectile() -> void:
   var fireball: Fireball = fireball_scene.instantiate()
-  fireball.position = player.position
+  fireball.position = Vector2(player.position.x, player.position.y - 10)
   fireball.speed = speed
   fireball.damage = damage
   fireball.target = get_closest_target()
@@ -72,13 +77,13 @@ func on_fireball_timeout(fireball) -> void:
     fireball.get_parent().remove_child(fireball)
     fireball.queue_free()
 
-func _timer_timeout():
+func _on_reload_timer_timeout():
   ammo += base_ammo
+  attack_started.emit()
   attack_timer.start()
 
 func _on_attack_timer_timeout():
   if ammo > 0:
-    player._character_sprite.play("fire_attack")
     _fire_projectile()
     ammo -= 1
     attack_timer.start()
@@ -91,7 +96,7 @@ func get_closest_target() -> Vector2:
     var closest_distance = player.position.distance_to(closest_enemy.global_position)
     for enemy in nearest_enemies:
       var distance = player.position.distance_to(enemy.global_position)
-      if  distance < closest_distance:
+      if distance < closest_distance:
         closest_enemy = enemy
         closest_distance = distance
     return closest_enemy.global_position
