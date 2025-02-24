@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://c38hyx2gehnre"]
+[gd_scene load_steps=63 format=3 uid="uid://c38hyx2gehnre"]
 
 [ext_resource type="Texture2D" uid="uid://c3yh3bllj3faf" path="res://Texture/Slime/Slime/Slime-Idle.png" id="1_r6jwh"]
 [ext_resource type="Script" path="res://entities/enemies/slime/enemy_slime.gd" id="1_y7buf"]
@@ -8,8 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://b2cbkj7y10er" path="res://Texture/Slime/Slime/Slime-Walk.png" id="2_xmpyp"]
 [ext_resource type="PackedScene" uid="uid://d3dtnbvlkqxoi" path="res://utility/hurt_box/hurt_box.tscn" id="4_ems3l"]
 [ext_resource type="PackedScene" uid="uid://cfjq2ltb36juu" path="res://utility/hit_box/hit_box.tscn" id="5_dlb5d"]
+[ext_resource type="Texture2D" uid="uid://c8g7kq0ni4i5b" path="res://Texture/Slime/Slime/Slime-Attack01.png" id="7_70s1l"]
 [ext_resource type="Script" path="res://scripts/states/state_machine.gd" id="9_ji0ld"]
 [ext_resource type="Script" path="res://scripts/states/enemy/chase.gd" id="10_7oov6"]
+[ext_resource type="Script" path="res://utility/hit_box/hit_box.gd" id="10_t0jac"]
 [ext_resource type="Script" path="res://scripts/states/enemy/attack.gd" id="11_0aoam"]
 [ext_resource type="Script" path="res://scripts/states/enemy/hurt.gd" id="12_jolp6"]
 [ext_resource type="Script" path="res://scripts/states/enemy/death.gd" id="13_22iu3"]
@@ -158,6 +160,30 @@ region = Rect2(400, 0, 100, 100)
 atlas = ExtResource("1_r6jwh")
 region = Rect2(500, 0, 100, 100)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_y0ktv"]
+atlas = ExtResource("7_70s1l")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0u7ki"]
+atlas = ExtResource("7_70s1l")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_63wv2"]
+atlas = ExtResource("7_70s1l")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_as23g"]
+atlas = ExtResource("7_70s1l")
+region = Rect2(400, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ocu5v"]
+atlas = ExtResource("7_70s1l")
+region = Rect2(300, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fkpjd"]
+atlas = ExtResource("7_70s1l")
+region = Rect2(500, 0, 100, 100)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_s2qik"]
 animations = [{
 "frames": [{
@@ -199,7 +225,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack",
-"speed": 11.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -266,7 +292,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_f2mq2")
 }],
-"loop": true,
+"loop": false,
 "name": &"hurt",
 "speed": 5.0
 }, {
@@ -292,6 +318,29 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y0ktv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0u7ki")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_63wv2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_as23g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ocu5v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fkpjd")
+}],
+"loop": true,
+"name": &"unarmed_attack",
+"speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v3evi"]
@@ -306,6 +355,9 @@ height = 14.0
 radius = 9.4211
 height = 36.0461
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_id7n4"]
+size = Vector2(17, 5)
+
 [node name="EnemySlime" type="CharacterBody2D" groups=["enemy"]]
 y_sort_enabled = true
 collision_layer = 5
@@ -316,7 +368,9 @@ script = ExtResource("1_y7buf")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_s2qik")
-animation = &"death"
+animation = &"attack"
+frame = 5
+frame_progress = 0.709824
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 2)
@@ -332,14 +386,28 @@ position = Vector2(3, 2)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_meqbv")
 
-[node name="HitBox" parent="." groups=["attack"] instance=ExtResource("5_dlb5d")]
+[node name="HitBox" parent="." groups=["attack", "enemy"] instance=ExtResource("5_dlb5d")]
 collision_layer = 2
 collision_mask = 2
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
+visible = false
 position = Vector2(33, 10)
 rotation = 0.959931
 shape = SubResource("CapsuleShape2D_e08hk")
+
+[node name="UnarmedAttack" type="Area2D" parent="." groups=["attack", "enemy"]]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("10_t0jac")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UnarmedAttack"]
+position = Vector2(25.5, 0.5)
+shape = SubResource("RectangleShape2D_id7n4")
+
+[node name="DisableHitBoxTimer" type="Timer" parent="UnarmedAttack"]
+wait_time = 0.5
+one_shot = true
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("9_ji0ld")
@@ -356,18 +424,18 @@ enemy = NodePath("../..")
 [node name="Hurt" type="Node" parent="StateMachine" node_paths=PackedStringArray("enemy")]
 script = ExtResource("12_jolp6")
 enemy = NodePath("../..")
-attack_range = null
 
 [node name="Death" type="Node" parent="StateMachine" node_paths=PackedStringArray("enemy")]
 script = ExtResource("13_22iu3")
 enemy = NodePath("../..")
 
+[connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/Hurt" method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/Death" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="frame_changed" from="AnimatedSprite2D" to="StateMachine/Attack" method="_on_animated_sprite_2d_frame_changed"]
-[connection signal="frame_changed" from="AnimatedSprite2D" to="StateMachine/Hurt" method="_on_animated_sprite_2d_frame_changed"]
-[connection signal="frame_changed" from="AnimatedSprite2D" to="StateMachine/Death" method="_on_animated_sprite_2d_frame_changed"]
 [connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
 [connection signal="hurt" from="HurtBox" to="StateMachine/Chase" method="_on_hurt_box_hurt"]
 [connection signal="hurt" from="HurtBox" to="StateMachine/Attack" method="_on_hurt_box_hurt"]
+[connection signal="timeout" from="UnarmedAttack/DisableHitBoxTimer" to="UnarmedAttack" method="_on_disable_hit_box_timer_timeout"]
 
 [editable path="HurtBox"]
 [editable path="HitBox"]

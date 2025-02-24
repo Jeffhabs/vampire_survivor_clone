@@ -12,8 +12,6 @@ var nearest_enemies: Array = []
 @onready var player = get_tree().get_first_node_in_group("player") as Player
 @onready var player_sprite := player.get_node("AnimatedSprite2D") as AnimatedSprite2D
 
-signal attack_started()
-
 func _init(new_level: int) -> void:
   level = new_level
 
@@ -79,7 +77,6 @@ func on_fireball_timeout(fireball) -> void:
 
 func _on_reload_timer_timeout():
   ammo += base_ammo
-  attack_started.emit()
   attack_timer.start()
 
 func _on_attack_timer_timeout():

@@ -6,12 +6,13 @@ extends State
 
 @onready var sprite := enemy.get_node("AnimatedSprite2D") as AnimatedSprite2D
 @onready var hitbox_collision := enemy.get_node("HitBox/CollisionShape2D") as CollisionShape2D
+@onready var unarmed_hitbox := enemy.get_node("UnarmedAttack/CollisionShape2D") as CollisionShape2D
 
 var player: CharacterBody2D
 
 
 func _enter() -> void:
-  sprite.play("attack")
+  sprite.play("unarmed_attack")
   player = get_tree().get_first_node_in_group("player") as CharacterBody2D
 
 func _physics_update(_delta: float) -> void:
@@ -25,13 +26,20 @@ func _physics_update(_delta: float) -> void:
       transition_to.emit(self, "chase")
 
 func _on_animated_sprite_2d_frame_changed() -> void:
-  var start_frame := 8
-  var end_frame := 8
+  if sprite.animation != "unarmed_attack":
+    return
+  var start_frame := 3
+  var end_frame := 4
+
+  # var start_frame := 8
+  # var end_frame := 8
 
   if sprite.frame >= start_frame and sprite.frame <= end_frame:
-    hitbox_collision.call_deferred("set", "disabled", false)
+    # hitbox_collision.call_deferred("set", "disabled", false)
+    unarmed_hitbox.call_deferred("set", "disabled", false)
   else:
-    hitbox_collision.call_deferred("set", "disabled", true)
+    unarmed_hitbox.call_deferred("set", "disabled", true)
+    # hitbox_collision.call_deferred("set", "disabled", true)
 
 func _on_hurt_box_hurt(damage: int) -> void:
   enemy.health_points -= damage

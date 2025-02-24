@@ -6,11 +6,14 @@ extends State
 
 @onready var sprite := enemy.get_node("AnimatedSprite2D") as AnimatedSprite2D
 @onready var hitbox_collision := enemy.get_node("HitBox/CollisionShape2D") as CollisionShape2D
+@onready var unarmed_hitbox := enemy.get_node("UnarmedAttack/CollisionShape2D") as CollisionShape2D
 
 var player: CharacterBody2D
 
 func _enter() -> void:
   hitbox_collision.disabled = true
+  unarmed_hitbox.disabled = true
+
   sprite.play("chase")
   player = get_tree().get_first_node_in_group("player") as CharacterBody2D
 

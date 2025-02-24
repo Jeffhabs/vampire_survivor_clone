@@ -12,6 +12,6 @@ func _enter():
 func _physics_update(_delta: float):
   enemy.velocity = Vector2.ZERO
 
-func _on_animated_sprite_2d_frame_changed() -> void:
-  if sprite.animation == "hurt" and sprite.frame == sprite.sprite_frames.get_frame_count("hurt") - 1:
+func _on_animated_sprite_2d_animation_finished() -> void:
+  if sprite.animation == "hurt":
     transition_to.emit(self, "chase")

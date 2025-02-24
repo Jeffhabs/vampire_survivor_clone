@@ -5,6 +5,7 @@ extends CharacterBody2D
 @onready var player := get_tree().get_first_node_in_group("player")
 @onready var sprite := $AnimatedSprite2D
 @onready var hitbox_collision := $HitBox/CollisionShape2D
+@onready var unarmed_collision := $UnarmedAttack/CollisionShape2D
 
 var speed := 20.0
 var health_points := 10
@@ -22,19 +23,19 @@ func _physics_process(_delta: float) -> void:
 func update_sprite_orientation(to_player: Vector2) -> void:
   if to_player.x < 0:
     sprite.flip_h = true
-    hitbox_collision.position.x = -initial_collision_position.x
+    hitbox_collision.position.x = - initial_collision_position.x
   else:
     sprite.flip_h = false
     hitbox_collision.position.x = initial_collision_position.x
 
   if to_player.y < 0:
-    hitbox_collision.position.y = -initial_collision_position.y
+    hitbox_collision.position.y = - initial_collision_position.y
   else:
     hitbox_collision.position.y = initial_collision_position.y
 
   # player is top right
   if to_player.x > 0 and to_player.y < 0:
-    hitbox_collision.rotation_degrees = -initial_collision_rotation
+    hitbox_collision.rotation_degrees = - initial_collision_rotation
   # player is top left
   if to_player.x < 0 and to_player.y < 0:
     hitbox_collision.rotation_degrees = initial_collision_rotation
@@ -43,4 +44,4 @@ func update_sprite_orientation(to_player: Vector2) -> void:
     hitbox_collision.rotation_degrees = initial_collision_rotation
   # player is bottom left
   if to_player.x < 0 and to_player.y > 0:
-    hitbox_collision.rotation_degrees = -initial_collision_rotation
+    hitbox_collision.rotation_degrees = - initial_collision_rotation
