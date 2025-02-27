@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cmityq1sfhcby"]
+
+[ext_resource type="Script" path="res://entities/enemies/slime/attacks/unarmed_attack.gd" id="1_02yfs"]
+[ext_resource type="PackedScene" uid="uid://cfjq2ltb36juu" path="res://utility/hit_box/hit_box.tscn" id="1_hete5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exkl7"]
+size = Vector2(15, 4.625)
+
+[node name="UnarmedAttack" type="Node2D"]
+script = ExtResource("1_02yfs")
+
+[node name="HitBox" parent="." instance=ExtResource("1_hete5")]
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+position = Vector2(32, 0)
+shape = SubResource("RectangleShape2D_exkl7")
+
+[editable path="HitBox"]
