@@ -6,7 +6,7 @@ extends CharacterBody2D
 @onready var player := get_tree().get_first_node_in_group("player")
 @onready var sprite := $AnimatedSprite2D
 @onready var state_machine := $StateMachine
-@onready var attack_strategy: AttackStrategy = get_node("UnarmedAttack")
+@onready var attack_strategy: AttackStrategy = $UnarmedAttack
 
 enum SlimeAttacks {
   SWORD_ATTACK,

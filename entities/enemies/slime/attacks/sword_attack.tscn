@@ -4,8 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://cfjq2ltb36juu" path="res://utility/hit_box/hit_box.tscn" id="2_jofuy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ilx47"]
-radius = 9.4211
-height = 36.0461
+radius = 6.39007
+height = 34.4078
 
 [node name="SwordAttack" type="Node2D" groups=["attack"]]
 script = ExtResource("1_ivpi1")

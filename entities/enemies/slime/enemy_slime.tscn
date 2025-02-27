@@ -1,13 +1,13 @@
 [gd_scene load_steps=61 format=3 uid="uid://c38hyx2gehnre"]
 
-[ext_resource type="Texture2D" uid="uid://c3yh3bllj3faf" path="res://Texture/Slime/Slime/Slime-Idle.png" id="1_r6jwh"]
+[ext_resource type="Texture2D" uid="uid://c3yh3bllj3faf" path="res://Texture/characters/Slime/Slime/Slime-Idle.png" id="1_r6jwh"]
 [ext_resource type="Script" path="res://entities/enemies/slime/enemy_slime.gd" id="1_y7buf"]
-[ext_resource type="Texture2D" uid="uid://c42md3iq8bvlf" path="res://Texture/Slime/Slime/Slime-Death.png" id="2_4sdm3"]
-[ext_resource type="Texture2D" uid="uid://bf1k317x1vhag" path="res://Texture/Slime/Slime/Slime-Attack02.png" id="2_dbe42"]
-[ext_resource type="Texture2D" uid="uid://cmekgfpbo8jyx" path="res://Texture/Slime/Slime/Slime-Hurt.png" id="2_rwlkb"]
-[ext_resource type="Texture2D" uid="uid://b2cbkj7y10er" path="res://Texture/Slime/Slime/Slime-Walk.png" id="2_xmpyp"]
+[ext_resource type="Texture2D" uid="uid://c42md3iq8bvlf" path="res://Texture/characters/Slime/Slime/Slime-Death.png" id="2_4sdm3"]
+[ext_resource type="Texture2D" uid="uid://bf1k317x1vhag" path="res://Texture/characters/Slime/Slime/Slime-Attack02.png" id="2_dbe42"]
+[ext_resource type="Texture2D" uid="uid://cmekgfpbo8jyx" path="res://Texture/characters/Slime/Slime/Slime-Hurt.png" id="2_rwlkb"]
+[ext_resource type="Texture2D" uid="uid://b2cbkj7y10er" path="res://Texture/characters/Slime/Slime/Slime-Walk.png" id="2_xmpyp"]
 [ext_resource type="PackedScene" uid="uid://d3dtnbvlkqxoi" path="res://utility/hurt_box/hurt_box.tscn" id="4_ems3l"]
-[ext_resource type="Texture2D" uid="uid://c8g7kq0ni4i5b" path="res://Texture/Slime/Slime/Slime-Attack01.png" id="9_hk3ol"]
+[ext_resource type="Texture2D" uid="uid://c8g7kq0ni4i5b" path="res://Texture/characters/Slime/Slime/Slime-Attack01.png" id="9_hk3ol"]
 [ext_resource type="Script" path="res://scripts/states/state_machine.gd" id="9_ji0ld"]
 [ext_resource type="Script" path="res://scripts/states/enemy/chase.gd" id="10_7oov6"]
 [ext_resource type="Script" path="res://scripts/states/enemy/attack.gd" id="11_0aoam"]
@@ -362,9 +362,7 @@ speed = 30.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_s2qik")
-animation = &"unarmed_attack"
-frame = 5
-frame_progress = 1.0
+animation = &"sword_attack"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 2)
@@ -385,6 +383,9 @@ sprite = NodePath("../AnimatedSprite2D")
 attack_range = 58.0
 damage = 7
 animation_name = "sword_attack"
+
+[node name="CollisionShape2D" parent="SwordAttack/HitBox" index="0"]
+position = Vector2(33, 9)
 
 [node name="UnarmedAttack" parent="." node_paths=PackedStringArray("sprite") groups=["attack", "enemy"] instance=ExtResource("12_q00gk")]
 sprite = NodePath("../AnimatedSprite2D")
