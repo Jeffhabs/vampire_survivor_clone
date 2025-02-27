@@ -8,8 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://boi5wgqhlgkr4" path="res://Texture/TX Tileset Grass.png" id="7_01vqv"]
 [ext_resource type="Texture2D" uid="uid://ntogk3w8lojt" path="res://Texture/TX Tileset Stone Ground.png" id="8_bdhwr"]
 [ext_resource type="Texture2D" uid="uid://cefdjt6e4e7lj" path="res://Texture/TX Tileset Wall.png" id="9_yg26k"]
-[ext_resource type="PackedScene" uid="uid://oqsl5aw5bwoa" path="res://entities/player/player.tscn" id="10_0fxmp"]
-[ext_resource type="PackedScene" uid="uid://clorotvs4bb1l" path="res://entities/enemies/enemy_spawner.tscn" id="11_b3cnl"]
+[ext_resource type="PackedScene" uid="uid://oqsl5aw5bwoa" path="res://src/player/player.tscn" id="10_0fxmp"]
+[ext_resource type="PackedScene" uid="uid://clorotvs4bb1l" path="res://src/enemies/enemy_spawner.tscn" id="11_b3cnl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6y8dl"]
 texture = ExtResource("3_js1cq")

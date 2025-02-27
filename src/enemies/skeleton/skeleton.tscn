@@ -1,0 +1,81 @@
+[gd_scene load_steps=12 format=3 uid="uid://scb6kavgqevi"]
+
+[ext_resource type="Texture2D" uid="uid://c0qeknufud78u" path="res://Texture/characters/Skeleton/Skeleton/Skeleton-Walk.png" id="1_bgxbd"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w6213"]
+radius = 3.5
+height = 11.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_knb8o"]
+atlas = ExtResource("1_bgxbd")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jrm22"]
+atlas = ExtResource("1_bgxbd")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d0mru"]
+atlas = ExtResource("1_bgxbd")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vrlgo"]
+atlas = ExtResource("1_bgxbd")
+region = Rect2(300, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mht1m"]
+atlas = ExtResource("1_bgxbd")
+region = Rect2(400, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k7l2s"]
+atlas = ExtResource("1_bgxbd")
+region = Rect2(500, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_asfps"]
+atlas = ExtResource("1_bgxbd")
+region = Rect2(600, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y2h32"]
+atlas = ExtResource("1_bgxbd")
+region = Rect2(700, 0, 100, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uxqa0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_knb8o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jrm22")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d0mru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vrlgo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mht1m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k7l2s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_asfps")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y2h32")
+}],
+"loop": true,
+"name": &"chase",
+"speed": 6.0
+}]
+
+[node name="Skeleton" type="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_w6213")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-2, 0)
+sprite_frames = SubResource("SpriteFrames_uxqa0")
+animation = &"chase"
