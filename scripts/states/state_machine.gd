@@ -46,3 +46,8 @@ func on_state_transition_to(state: State, new_state_name: String) -> void:
 
   new_state._enter()
   current_state = new_state
+
+
+func transition_to(state_name: String) -> void:
+  if current_state:
+    current_state.transition_to.emit(current_state, state_name)

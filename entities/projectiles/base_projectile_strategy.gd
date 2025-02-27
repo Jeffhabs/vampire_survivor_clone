@@ -2,14 +2,14 @@ class_name BaseProjectileStrategy
 extends Area2D
 
 # TODO: audit these variables
-var speed: float
-var interval: float = 2.0
-var damage := 5
-var direction: Vector2
-var lifetime: float
-var target := Vector2.ZERO
-var angel = Vector2.ZERO
-var level := 0
+@export var speed: float
+@export var interval: float = 2.0
+@export var damage := 5
+@export var direction: Vector2
+@export var lifetime: float
+@export var target := Vector2.ZERO
+@export var angel = Vector2.ZERO
+@export var level := 1
 
 func _ready() -> void:
   _initialize()

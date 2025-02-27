@@ -10,6 +10,7 @@ signal hurt(damage: int)
 func _on_area_entered(area: Area2D) -> void:
   if area.is_in_group("attack"):
     if not area.get("damage") == null:
+      print("area damage: %d " % area.damage)
       match HurtBoxType:
         0: # Cooldown
           collision.call_deferred("set", "disabled", true)
