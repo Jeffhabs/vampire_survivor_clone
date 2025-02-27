@@ -6,7 +6,7 @@ extends State
 var player: CharacterBody2D
 
 func _enter() -> void:
-  assert(enemy.attack_strategy, "Enemy Attack Strategy not set.")
+  assert(enemy.attack_strategy, "Enemy Attack Strategy not set. (SLIME)")
   enemy.attack_strategy._play_animation()
   player = get_tree().get_first_node_in_group("player")
 
