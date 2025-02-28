@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://clorotvs4bb1l"]
+[gd_scene load_steps=7 format=3 uid="uid://clorotvs4bb1l"]
 
 [ext_resource type="Script" path="res://src/enemies/enemy_spawner.gd" id="1_u41qy"]
 [ext_resource type="PackedScene" uid="uid://c38hyx2gehnre" path="res://src/enemies/slime/enemy_slime.tscn" id="2_l4yya"]
 [ext_resource type="Script" path="res://resources/spawn_info.gd" id="3_jxam4"]
+[ext_resource type="PackedScene" uid="uid://scb6kavgqevi" path="res://src/enemies/skeleton/skeleton.tscn" id="4_fkrgb"]
 
 [sub_resource type="Resource" id="Resource_2uwa5"]
 script = ExtResource("3_jxam4")
@@ -10,13 +11,23 @@ time_start = 0
 time_end = 60
 enemey = ExtResource("2_l4yya")
 enemy_count = 2
-enemy_limit = 20
+enemy_limit = 10
 spawn_interval = 1.0
+spawn_delay_counter = 0
+
+[sub_resource type="Resource" id="Resource_aowrw"]
+script = ExtResource("3_jxam4")
+time_start = 1
+time_end = 60
+enemey = ExtResource("4_fkrgb")
+enemy_count = 5
+enemy_limit = 15
+spawn_interval = 5.0
 spawn_delay_counter = 0
 
 [node name="EnemySpawner" type="Node2D"]
 script = ExtResource("1_u41qy")
-spawns = Array[ExtResource("3_jxam4")]([SubResource("Resource_2uwa5")])
+spawns = Array[ExtResource("3_jxam4")]([SubResource("Resource_2uwa5"), SubResource("Resource_aowrw")])
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true

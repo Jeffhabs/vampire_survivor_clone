@@ -13,7 +13,8 @@ var last_facing_left: bool = false
 signal nearest_enemies_detected(enemies: Array)
 
 func _ready() -> void:
-  projectile_manager.add_projectile("fireball")
+  # projectile_manager.add_projectile("fireball")
+  pass
 
 func _physics_process(_delta: float) -> void:
   move_player()

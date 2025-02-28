@@ -298,6 +298,7 @@ position = Vector2(0.5, -14)
 shape = SubResource("RectangleShape2D_5vi2h")
 
 [node name="EnemyDetectionArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 4
 collision_mask = 4
 monitorable = false

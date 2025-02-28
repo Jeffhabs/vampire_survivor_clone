@@ -50,10 +50,9 @@ func _attack() -> void:
   if sprite.animation != animation_name:
     return
 
-  var start_frame := 8
-  var end_frame := 8
-
-  if sprite.frame >= start_frame and sprite.frame <= end_frame:
-    hitbox_collision.call_deferred("set", "disabled", false)
+  if sprite.frame == attack_start_frame and sprite.frame <= attack_end_frame:
+    if hitbox_collision.disabled:
+      hitbox_collision.call_deferred("set", "disabled", false)
   else:
-    hitbox_collision.call_deferred("set", "disabled", true)
+    if not hitbox_collision.disabled:
+      hitbox_collision.call_deferred("set", "disabled", true)

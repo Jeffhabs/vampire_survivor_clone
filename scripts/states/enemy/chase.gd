@@ -1,6 +1,6 @@
 extends State
 
-@export var enemy: EnemySlime
+@export var enemy: CharacterBody2D
 @onready var sprite := enemy.get_node("AnimatedSprite2D") as AnimatedSprite2D
 
 var player: CharacterBody2D

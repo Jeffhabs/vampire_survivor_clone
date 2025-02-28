@@ -9,12 +9,12 @@
 [ext_resource type="PackedScene" uid="uid://d3dtnbvlkqxoi" path="res://utility/hurt_box/hurt_box.tscn" id="4_ems3l"]
 [ext_resource type="Texture2D" uid="uid://c8g7kq0ni4i5b" path="res://Texture/characters/Slime/Slime/Slime-Attack01.png" id="9_hk3ol"]
 [ext_resource type="Script" path="res://scripts/states/state_machine.gd" id="9_ji0ld"]
-[ext_resource type="Script" path="res://src/enemies/slime/state/chase.gd" id="10_7oov6"]
-[ext_resource type="Script" path="res://src/enemies/slime/state/attack.gd" id="11_0aoam"]
+[ext_resource type="Script" path="res://scripts/states/enemy/chase.gd" id="10_7oov6"]
+[ext_resource type="Script" path="res://scripts/states/enemy/attack.gd" id="11_0aoam"]
 [ext_resource type="PackedScene" uid="uid://b4vt35m0pi46x" path="res://src/enemies/slime/attacks/sword_attack.tscn" id="11_m7i55"]
-[ext_resource type="Script" path="res://src/enemies/slime/state/hurt.gd" id="12_jolp6"]
+[ext_resource type="Script" path="res://scripts/states/enemy/hurt.gd" id="12_jolp6"]
 [ext_resource type="PackedScene" uid="uid://cmityq1sfhcby" path="res://src/enemies/slime/attacks/unarmed_attack.tscn" id="12_q00gk"]
-[ext_resource type="Script" path="res://src/enemies/slime/state/death.gd" id="13_22iu3"]
+[ext_resource type="Script" path="res://scripts/states/enemy/death.gd" id="13_22iu3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_assaw"]
 atlas = ExtResource("2_xmpyp")
@@ -383,6 +383,8 @@ sprite = NodePath("../AnimatedSprite2D")
 attack_range = 58.0
 damage = 7
 animation_name = "sword_attack"
+attack_start_frame = 8
+attack_end_frame = 8
 
 [node name="CollisionShape2D" parent="SwordAttack/HitBox" index="0"]
 position = Vector2(33, 9)
@@ -392,6 +394,8 @@ sprite = NodePath("../AnimatedSprite2D")
 attack_range = 45.0
 damage = 3
 animation_name = "unarmed_attack"
+attack_start_frame = 3
+attack_end_frame = 3
 
 [node name="HitBox" parent="UnarmedAttack" index="0" groups=["attack", "enemy"]]
 collision_layer = 2
@@ -421,10 +425,8 @@ enemy = NodePath("../..")
 script = ExtResource("13_22iu3")
 enemy = NodePath("../..")
 
-[connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/Attack" method="_on_animated_sprite_2d_animation_finished"]
-[connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/Hurt" method="_on_animated_sprite_2d_animation_finished"]
-[connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/Death" method="_on_animated_sprite_2d_animation_finished"]
-[connection signal="frame_changed" from="AnimatedSprite2D" to="StateMachine/Attack" method="_on_animated_sprite_2d_frame_changed"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]
 [connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
 
 [editable path="HurtBox"]

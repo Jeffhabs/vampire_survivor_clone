@@ -8,8 +8,3 @@ func _enter() -> void:
 
 func _physics_update(_delta: float) -> void:
   enemy.velocity = Vector2.ZERO
-
-
-func _on_animated_sprite_2d_animation_finished() -> void:
-  if sprite.animation == "death":
-    get_tree().create_timer(1).timeout.connect(enemy.queue_free)
